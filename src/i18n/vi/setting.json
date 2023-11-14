@@ -1,0 +1,7 @@
+{
+    "holiday": {
+        "duplicate": "Không thể thêm nhiều hơn một ngày nghỉ",
+        "notFound": "Không tìm thấy ngày nghỉ này",
+        "removeSuccess": "Đã xóa ngày nghỉ thành công"
+    }
+}

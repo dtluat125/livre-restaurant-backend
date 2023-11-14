@@ -1,0 +1,7 @@
+{
+    "common": {
+        "error": {
+            "billing.notFound": "Billing does not exist"
+        }
+    }
+}

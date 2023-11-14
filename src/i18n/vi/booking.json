@@ -1,0 +1,20 @@
+{
+    "fields": {
+        "status": "Trạng thái",
+        "name": "Tên",
+        "description": "Mô tả",
+        "url": "Đường dẫn đến ảnh",
+        "payDate": "Ngày thanh toán",
+        "userId": "userId"             
+    },
+    "message": {
+        "error": {
+            "itemNotExist": "Hóa đơn không tồn tại",
+            "payer.waitingForApproval": "Người thanh toán đang chờ được phê duyệt"
+        },
+        "success": {
+            "delete": "Xóa hóa đơn thành công"
+        }
+        
+    }
+}

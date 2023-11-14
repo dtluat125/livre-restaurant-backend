@@ -1,0 +1,13 @@
+{
+  "fields": {
+    "fileName": "Tên file",
+    "originalName": "Tên gốc",
+    "path": "Đường dẫn",
+    "presignedUrl": "URL"
+  },
+  "message": {
+    "error": {
+      "itemNotExist": "File không tồn tại"
+    }
+  }
+}

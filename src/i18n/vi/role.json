@@ -1,0 +1,19 @@
+{
+    "fields": {
+        "name": "Tên",
+        "permission": "Quyền"
+    },
+    "common": {
+        "error": {
+            "name.exist": "Tên đã tồn tại trong hệ thống",
+            "role.notFound": "Vai trò không tồn tại",
+            "role.assigned": "Vai trò đã được gán cho người dùng"
+        }
+    },
+    "permission": {
+        "canRead": "Có thể xem",
+        "canCreate": "Có thể thêm",
+        "canUpdate": "Có thể cập nhật",
+        "canDelete": "Có thể xóa"
+    }
+}

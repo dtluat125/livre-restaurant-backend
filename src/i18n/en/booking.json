@@ -1,0 +1,20 @@
+{
+    "fields": {
+        "status": "Status",
+        "nameCustomer": "Name Customer",
+        "phone": "Phone",
+        "tableId": "id Table",
+        "arrivalTime": "arrival Time",
+        "numberPeople": "number People"            
+    },
+    "message": {
+        "error": {
+            "itemNotExist": "Billing does not exist",
+            "payer.waitingForApproval": "Payer is waiting for approval"
+        },
+        "success": {
+            "delete": "The billing has been deleted successfully"
+        }
+        
+    }    
+}

@@ -1,0 +1,302 @@
+# TIMS - server setup guideline  for server running ubuntu 20.04.1
+**IMPORTANT NOTE** *applying this approach ONLY for DEV purpose*
+
+## Common
+- Download & save the .pem key file in your local machine (should be in `~/.ssh/tims-dev.pem`)
+- Change file mode: `chmod 400 ~/.ssh/tims-dev.pem`
+- Access to the server: `ssh -i ~/.ssh/tims-dev.pem ubuntu@18.141.170.133`
+
+## Server information
+- Server information:
+    + Public IP: `18.141.170.133`
+    + hostname: `ubuntu@ec2-18-141-170-133.ap-southeast-1.compute.amazonaws.com`
+    + Applications: Backend API, Frontend Web App, Mysql database
+    + Database: MySQL 8.0
+### Install MySQL
+- Install MySQL 8.0 server:
+    ```
+    Enable mysql repositories
+    $ wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.11-1_all.deb
+    isntall mysql repositories
+    $ sudo dpkg -i mysql-apt-config_0.8.11-1_all.deb
+    refresh the repositories
+    $ sudo apt-get update
+    install mysql
+    $ sudo apt-get install mysql-server
+    setup mysql sercurity => change root password
+    $ sudo mysql_secure_installation
+    => config security installation options
+    ```
+- Check MySQL installation
+    ```
+    $ mysql --version
+    $ mysql  Ver 8.0.27-0ubuntu0.20.04.1 for Linux on x86_64 ((Ubuntu))
+    
+    ```
+- Start MySQL server whenever the machine is rebooted 
+    ```
+    $ sudo systemctl start mysql
+    ```
+- Check the server status
+    ```
+    $ sudo systemctl status mysql
+    ● mysql.service - MySQL Server
+    Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)
+    Active: active (running) since Sun 2021-11-14 16:32:22 UTC; 5s ago
+        Docs: man:mysqld(8)
+           http://dev.mysql.com/doc/refman/en/using-systemd.html
+    Process: 2797 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)
+    Main PID: 2871 (mysqld)
+        Status: "Server is operational"
+        CGroup: /system.slice/mysqld.service
+           └─2871 /usr/sbin/mysqld
+
+    Nov 14 16:32:16 ip-172-31-14-222.ap-southeast-1.compute.internal systemd[1]: Starting MySQL Server...
+    Nov 14 16:32:22 ip-172-31-14-222.ap-southeast-1.compute.internal systemd[1]: Started MySQL Server.
+    ```
+- Enable MySQL server auto starting on machine boot
+    ```
+    $ sudo systemctl enable mysql
+    ```
+- Create an user and grant some privileges:
+    ```
+    $ sudo mysql
+    $ CREATE USER 'ttlabAdmin'@'%' IDENTIFIED BY '<your password is here>';
+    $ GRANT ALL PRIVILEGES ON *.* TO 'ttlabAdmin'@'%';
+    $ FLUSH PRIVILEGES;
+    ```
+- Create database ttlabAdmin
+    ```
+    $ CREATE DATABASE ttlabAdmin;
+    ```
+- Allow access from any host to this server with port 3306:
+    $ sudo ufw allow 3306
+- Allow any host to access to mysql server
+    $ sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+    change bind-address            = 127.0.0.1 to bind-address            = 0.0.0.0
+    restart the mysql server:
+    $ sudo systemctl restart mysql
+### Install Node.js
+- Install `nvm` tool
+    ```
+    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+    $ source ~/.bashrc
+    $ nvm --version
+    0.39.0
+    ```
+- Install `Node.js` version (latest LTS of version 14)
+    ```
+    $ nvm install v14.18.1
+    $ node --version
+    v14.18.1
+    ```
+- Install `yarn` tool
+    ```
+    $ npm install --global yarn
+    $ yarn --version
+    1.22.17
+    ```
+- Install `pm2` tool
+    ```
+    $ npm install pm2 -g
+    ```
+    
+### Install Nginx
+- Install `nginx`
+    ```
+    $ sudo apt install nginx
+    $ nginx -v
+    nginx version: nginx/1.18.0 (Ubuntu)
+    ```
+- Start `nginx` server
+    ```
+    $ sudo systemctl start nginx
+    $ sudo systemctl status nginx
+    ● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2021-12-15 10:23:30 UTC; 1min 36s ago
+       Docs: man:nginx(8)
+   Main PID: 31804 (nginx)
+      Tasks: 3 (limit: 4693)
+     Memory: 4.3M
+     CGroup: /system.slice/nginx.service
+             ├─31804 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+             ├─31805 nginx: worker process
+             └─31806 nginx: worker process
+
+Dec 15 10:23:30 ip-172-31-1-24 systemd[1]: Starting A high performance web server and a reverse proxy server...
+Dec 15 10:23:30 ip-172-31-1-24 systemd[1]: Started A high performance web server and a reverse proxy server.
+
+    ```
+- Set auto starting `nginx` on EC2 instance reboot
+    ```
+    $ sudo systemctl enable nginx
+    ```
+
+## Frontend - Web App
+- Setup gitlab ssh key
+    ```
+    $ ssh-keygen
+    enter passPhrase(ttlab1234) and store ssh key pair in ~/.ssh, key file is tims_webapp_key_rsa
+    $ eval $(ssh-agent -s)
+    $ ssh-add ~/.ssh/tims_webapp_key_rsa
+    so enter passPhrase: ttlab1234
+    $ nano ~/.ssh/tims_webapp_key_rsa
+    enter the following content: 
+	    Host gitlab.com
+	  PreferredAuthentications publickey
+	  IdentityFile ~/.ssh/tims_webapp_key_rsa
+    => save
+    $ chmod 600 ~/.ssh/config
+    => Then, add the public key into Gitlab SSH Keys setting
+    ```
+- Clone the source code from Gitlab
+    ```
+    $ mkdir app
+    $ git clone git@gitlab.com:t3482/ttlab-pvn-web-app.git
+    $ cd ttlab-pvn-web-app
+    ```
+- Prepare the environment variables
+    ```
+    $ cp .env.example .env
+    ```
+    => Here, edit the value as expectation
+- Build the web app
+    ```
+    $ yarn install
+    $ yarn build
+    $ pwd
+    ```
+    => Note the directory of `pwd` command here called `web_app_root`
+- Set the access permission to the target folder
+    ```
+    $ sudo chmod o+x /home/ec2-user/app/ttlab-pvn-web-app/dist/
+    ```
+
+## Backend - TIMS service
+### Database Setup
+- Access to the database server: `mysql -u root -p` then type your new root password
+- Create or use the target database
+    ```
+    $ CREATE DATABASE IF NOT EXISTS ttlabAdmin CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+    $ CREATE USER 'ttlabAdmin'@'localhost' IDENTIFIED BY '<secret_password_here>';
+    $ GRANT ALL PRIVILEGES ON ttlabAdmin.* TO 'ttlabAdmin'@'%';
+    $ FLUSH PRIVILEGES;
+    ```
+- Migrate all data tables into the database: yarn migration:run
+
+### Build the backend app
+- Clone the source code from Gitlab
+    ```
+    $ cd app
+    $ git clone git@gitlab.com:ttlab-tims/ttlab-tims-backend.git
+    $ cd ttlab-tims-backend
+    $ git checkout develop
+    ```
+- Build the app
+    ```
+    $ yarn install
+    $ yarn build
+    ```
+- Prepare the `environment variables` file
+    ```
+    $ cp .env.example .env
+    ```
+    => Edit the accurate environment variable value in `.env` file
+- Start the app
+    ```
+    $ pm2 start dist/main.js --no-autorestart
+    ```
+- Check the pm2 list processes:
+    ```
+    pm2 list
+    ```
+
+### Config Nginx
+- Create config entry file for `TIMS` Backend API server
+    ```
+    $ sudo nano /etc/nginx/conf.d/api.dev.tims.tokyotechlab.com.conf
+
+    server {
+        listen 80;
+
+        server_name api.dev.tims.tokyotechlab.com;
+
+        location / {
+            proxy_pass http://localhost:3000; # Change the port if needed
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+    }
+
+
+    ```
+- Create config entry file for Frontend web app
+    ```
+    $ sudo nano /etc/nginx/conf.d/dev.tims.tokyotechlab.com.conf
+
+    server {
+        listen 80;
+        server_name dev.tims.tokyotechlab.com;
+
+        location / {
+            root /home/ubuntu/app/ttlab-tims-webapp/dist/;
+            index index.html;
+            try_files $uri $uri/ /index.html;
+        }
+    }
+    ```
+- Restart `nginx`
+    ```
+    $ sudo systemctl restart nginx
+    ```
+### Setup SSL with Let'sEncrypt
+- Install `certbot` plugin for `nginx`
+    ```
+    $ sudo apt install certbot
+    $ sudo apt-get install python3-certbot-nginx
+    $ certbot --version
+    certbot 0.40.0
+    ```
+- Execute `certbot`
+    ```
+    $ sudo certbot --nginx
+    ```
+    => Answer the questions and finally submit the certificate-invoking requests to all target sub-domains
+- Setup auto refresh certificate
+    ```
+    $ sudo crontab -e
+    00      2,14    *       *       *       root    certbot renew --no-self-upgrade && sudo systemctl restart nginx
+    $ sudo systemctl restart cron
+    ```
+
+### install selenium
+    $ mkdir selenium_installation
+    $ cd selenium_installation
+- Install chrome
+    $ nano install_chrome.sh
+    	sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+	sudo echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+	sudo apt-get -y update
+	# google-chrome-stable is version 96.0.3904.70 at the moment
+	sudo apt-get -y install google-chrome-stable
+- Install chromedriver
+    $ nano install_chrome_driver.sh
+        wget https://chromedriver.storage.googleapis.com/96.0.4664.45/chromedriver_linux64.zip
+	unzip chromedriver_linux64.zip
+	sudo mv chromedriver /usr/bin/chromedriver
+	sudo chown root:root /usr/bin/chromedriver
+	sudo chmod +x /usr/bin/chromedriver
+- Install selelium
+    $ npm install selenium
+- Install
+    $ sudo apt-get install xvfb
+
+
+
+
+
+

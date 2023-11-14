@@ -1,0 +1,7 @@
+{
+    "holiday": {
+        "duplicate": "Can not have more than one holiday per a day",
+        "notFound": "This holiday does not exist",
+        "removeSuccess": "The holiday has been deleted"
+    }
+}

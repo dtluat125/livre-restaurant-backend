@@ -1,0 +1,54 @@
+{
+    "fields": {
+        "email": "Email",
+        "fullName": "Full name",
+        "password": "Password",
+        "phoneNumber": "Phone number",
+        "birthday": "Birthday",
+        "address": "Address",
+        "hometownAddress": "Hometown address",
+        "idCardIssuePlace": "Place of issue of identity card",
+        "gender": "Gender",
+        "role": "Role",
+        "provinceId": "Province ID",
+        "position": "Position",
+        "avatarId": "Avatar ID",
+        "citizenIdIssuedAt": "Citizen ID issued at",
+        "bank": "Bank",
+        "bankAccount": "Bank account",
+        "taxCode": "Tax code",
+        "socialInsurance": "Social insurance",
+        "note": "Note",
+        "citizenId": "Citizen id"
+    },
+    "common": {
+        "error": {
+            "user.notFound": "User does not exist",
+            "email.exist": "Email already exists",
+            "citizenId.exist": "CitizenId already exists",
+            "taxCode.exist": "Tax code already exists",
+            "bankAccount.exist": "Bank account already exists",
+            "socialInsurance.exist": "Social insurance already exists",
+            "contract.exist": "Contract of this user already exists, please delete contract before remove user",
+            "province.notExist": "Province does not exist",
+            "provinceId.notExist": "Province Id does not exist",
+            "positionId.notExist": "Position does not exist",
+            "asset.exist": "Asset assigned to this user already exist, please assign it to another before remove user",
+            "waitingForApproval": "This user is waiting for appoval"
+        }
+    },
+    "delete.success": "Delete user successfully",
+    "status": {
+        "error": {
+            "notAllow": "This status is not allowed",
+            "asset": "This user is managing at least one asset, please assign it to another user before inactive user",
+            "contract": "This user has an active contract, please delete the contract before inactive user"
+        }
+    },
+    "position": {
+        "nameExisted": "This position name already exist",
+        "positionNotExist": "This position with this id = {id} does not exist",
+        "hasUserRef": "This position with this  id = {id} cannot delete, because some user has this position",
+        "invalid": "Some users have deleting position, please change that position before submit"
+    }
+}

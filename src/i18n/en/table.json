@@ -1,0 +1,9 @@
+{
+    "message": {
+        "error": {
+            "conflictTime": "This table is reserved",
+            "tableUsing": "This table is using",
+            "tableReady": "This table is ready"
+        }
+    }    
+}

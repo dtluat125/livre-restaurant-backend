@@ -1,0 +1,54 @@
+{
+    "fields": {
+        "email": "Email",
+        "fullName": "Tên",
+        "password": "Mật khẩu",
+        "phoneNumber": "Số điện thoại",
+        "birthday": "Ngày sinh",
+        "address": "Địa chỉ hiện tại",
+        "hometownAddress": "Địa chỉ ở quê",
+        "idCardIssuePlace": "Nơi cấp căn cước công dân",
+        "gender": "Giới tính",
+        "role": "Quyền",
+        "position": "Vị trí",
+        "avatarId": "ID ảnh đại diện",
+        "citizenIdIssuedAt": "Ngày cấp",
+        "bank": "Ngân hàng",
+        "bankAccount": "Số tài khoản",
+        "provinceId": "Mã Tỉnh",
+        "taxCode": "Mã số thuế",
+        "socialInsurance": "Bảo hiểm xã hội",
+        "note": "Ghi chú",
+        "citizenId": "Căn cước công dân"
+    },
+    "common": {
+        "error": {
+            "user.notFound": "Người dùng không tồn tại",
+            "waitingForApproval": "Người dùng này đang đợi phê duyệt",
+            "email.exist": "Email đã tồn tại",
+            "citizenId.exist": "Căn cước công dân đã tồn tại",
+            "taxCode.exist": "Mã số thuế đã tồn tại",
+            "bankAccount.exist": "Số tài khoản đã tồn tại",
+            "socialInsurance.exist": "Bảo hiểm xã hội đã tồn tại",
+            "contract.exist": "Hợp đồng của người dùng này tồn tại, vui lòng xóa hợp đồng trước khi xóa người dùng",
+            "province.notExist": "Tỉnh thành không tồn tại trong hệ thống",
+            "provinceId.notExist": "Mã số tỉnh không tồn tại",
+            "positionId.notExist": "Vị trí không tồn tại",
+            "asset.exist": "Tài sản được chỉ định cho người dùng này tồn tại, vui lòng chỉ định cho người khác trước khi xóa người dùng"
+        }
+    },
+    "delete.success": "Xóa người dùng thành công",
+    "status": {
+        "error": {
+            "notAllow": "Trạng thái này không được phép",
+            "asset": "Người dùng này đang quản lý ít nhất một tài sản,  vui lòng chỉ định cho người khác trước khi ngừng hoạt động người dùng",
+            "contract": "Người dùng này có hợp đồng đang còn hiệu lực, vui lòng dừng hợp đồng trước khi ngừng hoạt động người dùng"
+        }
+    },
+    "position": {
+        "nameExisted": "Tên vị trí này đã tồn tại",
+        "positionNotExist": "Vị trí ứng với id = {id} không tồn tại",
+        "hasUserRef": "Vị trí ứng với id = {id} không thể xóa. Vì có user đang có vị trí này",
+        "invalid": "Có vài người dùng có vị trí đang bị xóa. Hãy kiểm tra và sửa lại"
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "fields": {
+    "fileName": "File Name",
+    "originalName": "Original Name",
+    "path": "Path",
+    "presignedUrl": "Presigned URL"
+  },
+  "message": {
+    "error": {
+      "itemNotExist": "File does not exist"
+    }
+  }
+}

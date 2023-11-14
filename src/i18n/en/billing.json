@@ -1,0 +1,20 @@
+{
+    "fields": {
+        "name": "Name",
+        "description": "Description",
+        "url": "Link to image",
+        "payDate": "Pay Date",
+        "userId": "userId"            
+    },
+    "message": {
+        "error": {
+            "itemNotExist": "Billing does not exist",
+            "payer.waitingForApproval": "Payer is waiting for approval",
+            "conflictTime": "This table is reserved"
+        },
+        "success": {
+            "delete": "The billing has been deleted successfully"
+        }
+        
+    }    
+}

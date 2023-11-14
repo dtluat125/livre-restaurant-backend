@@ -1,0 +1,6 @@
+{
+  "401": "Lỗi xác thực",
+  "403": "Không có quyền truy cập",
+  "400": "Request không đúng",
+  "500": "Lỗi hệ thống, id = {param}"
+}
