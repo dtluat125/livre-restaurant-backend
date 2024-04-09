@@ -53,6 +53,7 @@ export class SettingController {
             const setting = await this.settingService.getSettingByKey(
                 query.key,
             );
+            console.log(setting);
 
             return new SuccessResponse(setting);
         } catch (error) {

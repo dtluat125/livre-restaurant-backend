@@ -16,6 +16,8 @@
         "format": "prettier --write \"src/**/*.ts\"",
         "start:prod": "node dist/src/main.js",
         "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop -f database/config.ts",
+        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config database/config.ts",
+        "db:create": "npm run typeorm migration:generate -- -n",
         "drop:migration": "yarn run schema:drop && yarn run migration:run",
         "wdio": "wdio run wdio.conf.js",
         "download-file": "sh download.sh",

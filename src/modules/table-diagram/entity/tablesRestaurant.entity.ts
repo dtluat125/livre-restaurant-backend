@@ -1,14 +1,7 @@
-import { FloorRestaurant } from './../tableDiagram.constant';
-import { TableStatus } from '../tableDiagram.constant';
-import {
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
 import { BaseEntity } from 'src/common/entities/BaseEntity';
-import { Billing } from 'src/modules/billing/entity/billing.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { TableStatus } from '../tableDiagram.constant';
+import { FloorRestaurant } from './../tableDiagram.constant';
 
 @Entity({ name: 'tables_restaurants' })
 export class TablesRestaurant extends BaseEntity {
@@ -37,4 +30,18 @@ export class TablesRestaurant extends BaseEntity {
         nullable: true,
     })
     floor: FloorRestaurant;
+
+    @Column('decimal', {
+        nullable: true,
+        precision: 10,
+        scale: 5,
+    })
+    coordinateX: number;
+
+    @Column('decimal', {
+        nullable: true,
+        precision: 10,
+        scale: 5,
+    })
+    coordinateY: number;
 }

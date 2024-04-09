@@ -145,24 +145,29 @@ export class AuthService {
     }
 
     public async appendRoleToUser(user: User) {
-        const role = await this.dbManager
-            .createQueryBuilder(Role, 'role')
-            .leftJoinAndMapMany(
-                'role.rolePermissions',
-                RolePermission,
-                'rolePermission',
-                'rolePermission.roleId = role.id',
-            )
-            .where('role.id = :userId', { userId: user.roleId })
-            .select([
-                'role.id',
-                'role.name',
-                'role.description',
-                'rolePermission.permissionId',
-            ])
-            .getOne();
-        appendPermissionToRole(role);
-        user.role = role;
+        try {
+            const role = await this.dbManager
+                .createQueryBuilder(Role, 'role')
+                .leftJoinAndMapMany(
+                    'role.rolePermissions',
+                    RolePermission,
+                    'rolePermission',
+                    'rolePermission.roleId = role.id',
+                )
+                .where('role.id = :userId', { userId: user.roleId })
+                .select([
+                    'role.id',
+                    'role.name',
+                    'role.description',
+                    'rolePermission.permissionId',
+                ])
+                .getOne();
+            appendPermissionToRole(role);
+            user.role = role;
+        } catch (error) {
+            console.log('Error in appendRoleToUser');
+            throw new InternalServerErrorException(error);
+        }
     }
 
     public async getUserByEmail(email: string, attributes = usersAttributes) {
@@ -234,6 +239,8 @@ export class AuthService {
             const { email } = await googleClient.getTokenInfo(accessToken);
             return email;
         } catch (error) {
+            console.log('Error in getUserInfoFromAccessToken');
+
             throw new InternalServerErrorException(error);
         }
     }

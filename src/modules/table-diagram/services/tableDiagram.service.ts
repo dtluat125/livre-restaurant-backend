@@ -24,6 +24,8 @@ const tableAttributes: (keyof TablesRestaurant)[] = [
     'status',
     'arrivalTime',
     'numberSeat',
+    'coordinateX',
+    'coordinateY',
 ];
 @Injectable()
 export class TableDiagramService {

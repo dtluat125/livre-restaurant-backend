@@ -55,4 +55,6 @@ export const TableSchema = {
         .valid(...Object.values(FloorRestaurant))
         .optional()
         .label('booking.fields.status'),
+    coordinateX: Joi.number().max(1).label('coordinateX'),
+    coordinateY: Joi.number().max(1).label('coordinateY'),
 };

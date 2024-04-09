@@ -13,6 +13,7 @@ export const DatabaseConfig = [
         socketPath: null,
         synchronize: false,
         migrationsRun: false,
+        entities: ['dist/**/*.entity{.ts,.js}'],
         migrations: ['database/migrations/**/*{.ts,.js}'],
         cli: { migrationsDir: 'database/migrations' },
     },
@@ -28,9 +29,9 @@ export const DatabaseConfig = [
         synchronize: false,
         migrationsRun: false,
         entities: ['dist/**/*.entity{.ts,.js}'],
-        migrations: ['database/seedings/**/*{.ts,.js}'],
+        migrations: ['database/migrations/**/*{.ts,.js}'],
         cli: {
-            migrationsDir: 'database/seeds',
+            migrationsDir: 'database/seedings',
         },
     },
 ];

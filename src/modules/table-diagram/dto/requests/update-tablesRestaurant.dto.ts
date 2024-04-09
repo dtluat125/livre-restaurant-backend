@@ -14,4 +14,6 @@ export interface UpdateTableDto {
     numberPeople?: number;
     updatedBy?: number;
     status?: TableStatus;
+    coordinateX?: number;
+    coordinateY?: number;
 }

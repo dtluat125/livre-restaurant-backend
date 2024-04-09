@@ -154,6 +154,7 @@ export class TableDiagramController {
             }
 
             if (body.status === TableStatus.USED) {
+                console.log('check can setup table');
                 if (
                     !(await this.tableDiagramService.checkCanSetupTable(
                         new Date(),
@@ -169,6 +170,8 @@ export class TableDiagramController {
                         [],
                     );
                 }
+                console.log('check is table using');
+
                 if (await this.tableDiagramService.checkTableIsUsing(id)) {
                     const message = await this.i18n.translate(
                         'table.message.error.tableUsing',
