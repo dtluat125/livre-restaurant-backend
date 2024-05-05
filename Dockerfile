@@ -11,11 +11,11 @@ COPY yarn.lock ./
 RUN npm install yarn
 RUN yarn install
 
-# Copy the application source into the container.
-COPY . .
-
 # Build the application.
 RUN npm run build
+
+# Copy the application source into the container.
+COPY . .
 
 # # Uninstall the dependencies not required to run the built application.
 # RUN npm prune --production
