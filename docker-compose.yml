@@ -1,5 +1,19 @@
 version: '3'
 services:
+    app:
+        container_name: restaurantApp
+        restart: always
+        env_file:
+            - .env
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '3000:${PORT}'
+        depends_on:
+            - restaurantDB
+        networks:
+            - app
     restaurantDB:
         container_name: restaurantDB
         platform: linux/amd64 #for platform error on Apple M1 chips
