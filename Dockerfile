@@ -35,7 +35,11 @@ WORKDIR /usr/src/app
 # COPY --from=builder /usr/src/app/yarn* ./
 # COPY --from=builder /usr/src/app/node_modules/ ./node_modules/
 COPY --from=builder /usr/src/app/dist/ ./dist/
+COPY package*.json ./
+COPY yarn.lock ./
 
+RUN yarn install --prod
+RUN rm package*.json yarn.lock
 # Expose the web server's port.
 EXPOSE 3000
 
