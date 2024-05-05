@@ -13,12 +13,6 @@
     RUN yarn install
 
     COPY . .
-    
-    # Run TypeORM migrations
-    RUN npm run migration:run
-
-    # Run TypeORM seeding (if applicable)
-    RUN npm run seed:run
 
     # Build the application.
     RUN npm run build
@@ -44,7 +38,6 @@
 
     # RUN yarn install --prod
     # RUN rm package*.json yarn.lock
-
     # Expose the web server's port.
     EXPOSE 3000
 
