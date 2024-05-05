@@ -1,6 +1,7 @@
 # Initiate a container to build the application in.
 FROM node:14-alpine AS build
 ENV NODE_ENV=build
+ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /usr/src/app
 
 # Copy the package.json into the container.
