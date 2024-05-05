@@ -16,9 +16,6 @@ COPY . .
 # Build the application.
 RUN npm run build
 
-# Copy the application source into the container.
-COPY . .
-
 # # Uninstall the dependencies not required to run the built application.
 # RUN npm prune --production
 
@@ -34,7 +31,7 @@ WORKDIR /usr/src/app
 # COPY --from=builder /usr/src/app/package*.json ./
 # COPY --from=builder /usr/src/app/yarn* ./
 # COPY --from=builder /usr/src/app/node_modules/ ./node_modules/
-COPY --from=builder /usr/src/app/dist/ ./dist/
+COPY --from=builder /usr/src/app/dist ./dist
 COPY package*.json ./
 COPY yarn.lock ./
 
