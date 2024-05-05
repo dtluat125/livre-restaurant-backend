@@ -1,5 +1,5 @@
 # Initiate a container to build the application in.
-FROM node:14-alpine AS builder
+FROM node:14-alpine AS build
 ENV NODE_ENV=build
 WORKDIR /usr/src/app
 
@@ -31,7 +31,7 @@ WORKDIR /usr/src/app
 # COPY --from=builder /usr/src/app/package*.json ./
 # COPY --from=builder /usr/src/app/yarn* ./
 # COPY --from=builder /usr/src/app/node_modules/ ./node_modules/
-COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/dist ./dist
 COPY package*.json ./
 COPY yarn.lock ./
 
