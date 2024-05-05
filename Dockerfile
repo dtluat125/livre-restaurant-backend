@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 
 # Copy the package.json into the container.
 COPY package*.json ./
+COPY yarn.lock ./
 
 # Install the dependencies required to build the application.
 RUN npm install yarn
