@@ -11,6 +11,8 @@ COPY yarn.lock ./
 RUN npm install yarn
 RUN yarn install
 
+COPY . .
+
 # Build the application.
 RUN npm run build
 
