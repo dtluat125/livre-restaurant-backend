@@ -20,9 +20,12 @@ RUN npm run build
 # # Uninstall the dependencies not required to run the built application.
 # RUN npm prune --production
 
+# Debugging step: List contents of the directory to verify if dist folder is present.
+RUN ls -l /usr/src/app
+
 # Initiate a new container to run the application in.
 FROM node:14-alpine
-  ENV NODE_ENV=production
+ENV NODE_ENV=production
 WORKDIR /usr/src/app
 
 # Copy everything required to run the built application into the new container.
