@@ -5,9 +5,7 @@ services:
         restart: always
         env_file:
             - .env
-        build:
-            context: .
-            dockerfile: Dockerfile
+        build: ./
         ports:
             - '3000:${PORT}'
         depends_on:
