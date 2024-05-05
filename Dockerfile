@@ -17,8 +17,8 @@ COPY . .
 # Build the application.
 RUN npm run build
 
-# Uninstall the dependencies not required to run the built application.
-RUN npm prune --production
+# # Uninstall the dependencies not required to run the built application.
+# RUN npm prune --production
 
 # Initiate a new container to run the application in.
 FROM node:14-alpine
@@ -27,6 +27,7 @@ WORKDIR /usr/src/app
 
 # Copy everything required to run the built application into the new container.
 COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/yarn* ./
 COPY --from=builder /usr/src/app/node_modules/ ./node_modules/
 COPY --from=builder /usr/src/app/dist/ ./dist/
 
