@@ -29,15 +29,15 @@ ENV NODE_ENV=production
 WORKDIR /usr/src/app
 
 # Copy everything required to run the built application into the new container.
-# COPY --from=builder /usr/src/app/package*.json ./
-# COPY --from=builder /usr/src/app/yarn* ./
-# COPY --from=builder /usr/src/app/node_modules/ ./node_modules/
+COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/yarn* ./
+COPY --from=builder /usr/src/app/node_modules/ ./node_modules/
 COPY --from=build /usr/src/app/dist ./dist
-COPY package*.json ./
-COPY yarn.lock ./
+# COPY package*.json ./
+# COPY yarn.lock ./
 
-RUN yarn install --prod
-RUN rm package*.json yarn.lock
+# RUN yarn install --prod
+# RUN rm package*.json yarn.lock
 # Expose the web server's port.
 EXPOSE 3000
 
