@@ -29,7 +29,7 @@ export const DatabaseConfig = [
         synchronize: false,
         migrationsRun: false,
         entities: ['dist/**/*.entity{.ts,.js}'],
-        migrations: ['database/migrations/**/*{.ts,.js}'],
+        migrations: ['database/seedings/**/*{.ts,.js}'],
         cli: {
             migrationsDir: 'database/seedings',
         },

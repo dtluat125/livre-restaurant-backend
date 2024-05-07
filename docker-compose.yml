@@ -6,6 +6,7 @@ services:
         env_file:
             - .env
         build: ./
+        image: 'dtluat259/restaurant-app:latest'
         ports:
             - '3000:${PORT}'
         depends_on:
