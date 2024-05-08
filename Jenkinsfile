@@ -31,8 +31,7 @@ pipeline {
         }
             stages {
 
-        stage('Deploy to remote server') {
-           
+        stage('Deploy to remote server') { 
             steps {
                 withCredentials([file(credentialsId: 'livre-restaurant-ec2-backend', variable: 'ansible_key')]) {
                 script
