@@ -12,8 +12,8 @@ pipeline {
             withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
                     script {
                         echo "Building the Docker image..."
-                        sh 'docker compose build'
-                        sh 'docker push dtluat259/restaurant-app:latest'
+                        sh 'sudo docker compose build'
+                        sh 'sudo docker push dtluat259/restaurant-app:latest'
                     }
             }
                 }
@@ -25,9 +25,9 @@ pipeline {
                 script {
                     def image = 'dtluat259/restaurant-app:latest'
                     echo "Deploying ${image}..."
-                    sh "docker compose down"
-                    sh "echo y | docker container prune"
-                    sh "docker-compose -f docker-compose.deployment.yml up -d"
+                    sh "sudo docker compose down"
+                    sh "echo y | sudo docker container prune"
+                    // sh "sudo docker compose  -f docker-compose.deployment.yml up -d"
                 }
             }
         }
@@ -38,13 +38,13 @@ pipeline {
                 script
                 {
                     echo 'Deploy to Remote server...'
-                    sh 'ls -la'
-                    sh "cp /$ansible_key ansible_key"
-                    sh 'cat ansible_key'
+                    sh 'sudo ls -la'
+                    sh "sudo cp /$ansible_key ansible_key"
+                    sh 'sudo cat ansible_key'
                     sh 'ansible --version'
-                    sh 'ls -la'
-                    sh 'chmod 400 ansible_key '
-                    sh 'ansible-playbook -i hosts --private-key ansible_key playbook.yml'}
+                    sh 'sudo ls -la'
+                    sh 'sudo chmod 400 ansible_key '
+                    sh 'sudo ansible-playbook -i hosts --private-key ansible_key playbook.yml'}
                 }
             }
         }
