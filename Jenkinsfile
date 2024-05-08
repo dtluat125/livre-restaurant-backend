@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'ansible/ansible'
+            image 'ansible/ansible:default'
 
         }
     }
