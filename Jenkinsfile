@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'khaliddinh/ansible'
+        }
+    }
 
     stages {
         stage('Build With Docker') {
@@ -25,5 +29,33 @@ pipeline {
                 }
             }
         }
+            stages {
+
+        stage('Deploy to remote server') {
+           
+            steps {
+                withCredentials([file(credentialsId: 'livre-restaurant-ec2-backend', variable: 'ansible_key')]) {
+                script
+                {
+                    echo 'Deploy to Remote server...'
+                    sh 'ls -la'
+                    sh "cp /$ansible_key ansible_key"
+                    sh 'cat ansible_key'
+                    sh 'ansible --version'
+                    sh 'ls -la'
+                    sh 'chmod 400 ansible_key '
+                    sh 'ansible-playbook -i hosts --private-key ansible_key playbook.yml'}
+                }
+            }
+        }
+        
+    }
+
+    }
+}
+post {
+    // Clean after build
+    always {
+        cleanWs()
     }
 }

@@ -1,0 +1,2 @@
+[host]
+ec2-13-235-9-96.ap-south-1.compute.amazonaws.com  ansible_user=ubuntu

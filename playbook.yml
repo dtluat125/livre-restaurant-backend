@@ -1,0 +1,54 @@
+- name: ec2instance-playbook
+  hosts: host
+  become: yes
+  become_user: root
+  become_method: sudo
+  tasks:
+      - name: update
+        apt:
+            upgrade: yes
+            update_cache: yes
+            cache_valid_time: 86400
+      - name: Install required system packages
+        apt:
+            pkg:
+                - apt-transport-https
+                - ca-certificates
+                - curl
+                - software-properties-common
+                - python3-pip
+                - virtualenv
+                - python3-setuptools
+            state: latest
+            update_cache: true
+      - name: Add Docker GPG apt Key
+        apt_key:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            state: present
+
+      - name: Add Docker Repository
+        apt_repository:
+            repo: deb https://download.docker.com/linux/ubuntu focal stable
+            state: present
+
+      - name: Update apt and install docker-ce
+        apt:
+            name: docker-ce
+            state: latest
+            update_cache: true
+      - name: Ensure Git repository directory exists
+        file:
+            path: /home/ubuntu/apps/livre-restaurant-backend
+            state: directory
+
+      - name: Pull changes from Git repository
+        git:
+            repo: https://github.com/dtluat125/livre-restaurant-backend
+            dest: /home/ubuntu/apps/livre-restaurant-backend
+            version: main
+            force: yes
+      - name: deploy Docker compose stack
+        community.docker.docker_compose_v2:
+            project_src: /home/ubuntu/apps/livre-restaurant-backend
+            files:
+                - docker-compose.deployment.yml
