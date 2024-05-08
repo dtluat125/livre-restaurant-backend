@@ -7,15 +7,17 @@ pipeline {
 
     stages {
         stage('Build With Docker') {
-            withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
                 steps {
+
+            withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
                     script {
                         echo "Building the Docker image..."
                         sh 'docker compose build'
                         sh 'docker push dtluat259/restaurant-app:latest'
                     }
-                }
             }
+                }
+
         }
 
         stage('Deploy') {
