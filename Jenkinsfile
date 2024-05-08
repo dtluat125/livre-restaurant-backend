@@ -9,14 +9,14 @@ pipeline {
     stages {
         stage('Build With Docker') {
                 steps {
+                    script{
 
-            withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    script {
-                        echo "Building the Docker image..."
-                        sh 'sudo docker compose build'
-                        sh 'sudo docker push dtluat259/restaurant-app:latest'
+                        withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                                    echo "Building the Docker image..."
+                                    sh 'sudo docker compose build'
+                                    sh 'sudo docker push dtluat259/restaurant-app:latest'
+                        }
                     }
-            }
                 }
 
         }
