@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'khaliddinh/ansible'
+            image 'ansible/ansilbe:latest'
         }
     }
 
