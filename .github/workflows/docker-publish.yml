@@ -84,6 +84,10 @@ jobs:
 
         runs-on: self-hosted
         steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Pull latest github code
+              run: git pull origin main
             - name: Down old containers
               run: docker compose -f docker-compose.deployment.yml down
             - name: Pull image and run from dockerhub
