@@ -41,6 +41,7 @@ import {
 } from './dto/food.dto';
 import { Food } from './entity/food.entity';
 import { FoodService } from './service/food.service';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('food')
 @UseGuards(JwtGuard, AuthorizationGuard)
@@ -52,7 +53,8 @@ export class FoodController {
     ) {}
 
     @Get()
-    @Permissions([`${PermissionResources.MENU_FOOD}_${PermissionActions.READ}`])
+    // @Permissions([`${PermissionResources.MENU_FOOD}_${PermissionActions.READ}`])
+    @Public()
     async getFoods(
         @Query(
             new RemoveEmptyQueryPipe(),

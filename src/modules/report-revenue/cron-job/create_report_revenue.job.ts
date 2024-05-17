@@ -1,17 +1,16 @@
-import { AcceptStatus } from './../../common/common.constant';
-import { ReportRevenue } from '../entity/report_revenue.entity';
-import { SHIFT } from '../report_revenue.constant';
-import { Billing } from 'src/modules/billing/entity/billing.entity';
 import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
 import { ConfigService } from '@nestjs/config';
-import moment from 'moment';
+import { Cron } from '@nestjs/schedule';
 import * as dotenv from 'dotenv';
+import moment from 'moment-timezone';
 import { TIMEZONE_NAME_DEFAULT } from 'src/common/constants';
 import { createWinstonLogger } from 'src/common/services/winston.service';
-import { Brackets, getManager } from 'typeorm';
-import { MODULE_NAME } from '../report_revenue.constant';
 import { BillingStatus } from 'src/modules/billing/billing.constant';
+import { Billing } from 'src/modules/billing/entity/billing.entity';
+import { Brackets, getManager } from 'typeorm';
+import { ReportRevenue } from '../entity/report_revenue.entity';
+import { MODULE_NAME, SHIFT } from '../report_revenue.constant';
+import { AcceptStatus } from './../../common/common.constant';
 
 dotenv.config();
 
@@ -34,7 +33,7 @@ export class CreateReportRevenueJob {
 
     async createReportRevenue() {
         try {
-            const now = moment(new Date()).utc();
+            const now = moment(new Date()).tz(TIMEZONE_NAME_DEFAULT);
             const manager = getManager();
             let shift;
             let startShift;
@@ -42,12 +41,20 @@ export class CreateReportRevenueJob {
             const dayShift = now.format('YYYY-MM-DD');
             if (now.hours() < 7) {
                 shift = SHIFT.MORNING_SHIFT;
-                startShift = `${dayShift} 09:00:00`;
-                endShift = `${dayShift} 14:00:00`;
+                startShift = moment
+                    .tz(`${dayShift} 09:00:00`, TIMEZONE_NAME_DEFAULT)
+                    ?.toDate();
+                endShift = moment
+                    .tz(`${dayShift} 14:00:00`, TIMEZONE_NAME_DEFAULT)
+                    ?.toDate();
             } else {
                 shift = SHIFT.AFTERNOON_SHIFT;
-                startShift = `${dayShift} 14:00:00`;
-                endShift = `${dayShift} 22:00:00`;
+                startShift = moment
+                    .tz(`${dayShift} 14:00:00`, TIMEZONE_NAME_DEFAULT)
+                    ?.toDate();
+                endShift = moment
+                    .tz(`${dayShift} 22:00:00`, TIMEZONE_NAME_DEFAULT)
+                    ?.toDate();
             }
 
             const [billings, billingCount] = await manager.findAndCount(

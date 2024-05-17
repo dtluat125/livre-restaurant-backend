@@ -1,20 +1,22 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "target": "es2017",
-    "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": "./",
-    "skipLibCheck": true,
-    "paths": {
-      "~plugins/*": ["src/plugins/*"]
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "target": "es2017",
+        "sourceMap": true,
+        "outDir": "dist",
+        "baseUrl": "./",
+        "skipLibCheck": true,
+        "paths": {
+            "~plugins/*": ["src/plugins/*"]
+        },
+        "incremental": true
     },
-    "incremental": true
-  }
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules", "dist"]
 }

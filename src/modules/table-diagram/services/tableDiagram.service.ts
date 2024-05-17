@@ -266,10 +266,18 @@ export class TableDiagramService {
             console.log(timeArrival);
 
             return !bookings.some((item) => {
-                return (
+                console.log(
                     calculateDuration(
                         new Date(timeArrival).toUTCString(),
                         item.arrivalTime.toUTCString(),
+                    ),
+                );
+                return (
+                    Math.abs(
+                        calculateDuration(
+                            new Date(timeArrival).toUTCString(),
+                            item.arrivalTime.toUTCString(),
+                        ),
                     ) < BLOCK_TIME_BOOKING && item.id !== currentBookingId
                 );
             });

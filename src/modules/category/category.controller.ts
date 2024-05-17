@@ -44,6 +44,7 @@ import {
     UpdateCategorySchema,
     UpdateCategoryDto,
 } from './dto/category.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller({
     path: 'category',
@@ -57,9 +58,10 @@ export class CategoryController {
     ) {}
 
     @Get()
-    @Permissions([
-        `${PermissionResources.MENU_CATEGORY}_${PermissionActions.READ}`,
-    ])
+    // @Permissions([
+    //     `${PermissionResources.MENU_CATEGORY}_${PermissionActions.READ}`,
+    // ])
+    @Public()
     async getCategories(
         @Query(
             new RemoveEmptyQueryPipe(),

@@ -16,6 +16,14 @@ export class AuthorizationGuard implements CanActivate {
     constructor(private reflector: Reflector) {}
 
     canActivate(context: ExecutionContext): boolean {
+        const isPublic = this.reflector.get<boolean>(
+            'isPublic',
+            context.getHandler(),
+        );
+
+        if (isPublic) {
+            return true;
+        }
         const request = context.switchToHttp().getRequest();
         const routeRequiredPermissions = this.reflector.get<string[]>(
             'permissions',

@@ -9,14 +9,24 @@ import { AUTHORIZATION_TYPE } from '../../modules/auth/auth.constant';
 import { extractToken } from '../helpers/common.function';
 import { ConfigService } from '@nestjs/config';
 import ConfigKey from '../config/config-key';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
     constructor(
         private readonly configService: ConfigService,
         private jwtService: JwtService,
+        private reflector: Reflector,
     ) {}
     async canActivate(context: ExecutionContext): Promise<boolean> {
+        const isPublic = this.reflector.get<boolean>(
+            'isPublic',
+            context.getHandler(),
+        );
+
+        if (isPublic) {
+            return true;
+        }
         const request = context.switchToHttp().getRequest();
         const token = extractToken(request.headers.authorization || '');
         if (!token) {

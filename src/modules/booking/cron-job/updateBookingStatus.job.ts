@@ -3,7 +3,10 @@ import { BookingStatus } from './../booking.constant';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
-import { TIMEZONE_NAME_DEFAULT } from 'src/common/constants';
+import {
+    BLOCK_TIME_BOOKING,
+    TIMEZONE_NAME_DEFAULT,
+} from 'src/common/constants';
 import { createWinstonLogger } from 'src/common/services/winston.service';
 import { getManager } from 'typeorm';
 import moment from 'moment';
@@ -31,7 +34,9 @@ export class UpdateBookingStatusJob {
 
     async cancelBooking() {
         try {
-            const today = moment().toDate();
+            const today = moment()
+                .subtract(BLOCK_TIME_BOOKING, 'minutes')
+                .toDate();
             const manager = getManager();
             await manager
                 .createQueryBuilder()
@@ -85,7 +90,10 @@ export class UpdateBookingStatusJob {
     })
     async handleCron() {
         try {
-            this.logger.info('start UpdateBookingStatusJob at', new Date());
+            this.logger.info(
+                'start UpdateBookingStatusJob at',
+                new Date().toString(),
+            );
             this.cancelBooking();
         } catch (error) {
             this.logger.error('Error in UpdateBookingStatusJob: ', error);
