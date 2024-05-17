@@ -88,6 +88,37 @@ jobs:
               uses: actions/checkout@v4
             - name: Pull latest github code
               run: git pull origin main
+
+            - name: Make envfile
+              uses: SpicyPizza/create-envfile@v2.0
+              with:
+                  envkey_NODE_ENV: ${{ vars.NODE_ENV }}
+                  envkey_BASE_PATH: ${{ vars.BASE_PATH }}
+                  envkey_PORT: ${{ vars.PORT }}
+                  envkey_DB_USERNAME: ${{ vars.DB_USERNAME }}
+                  envkey_DB_PASSWORD: ${{ vars.DB_PASSWORD }}
+                  envkey_DB_NAME: ${{ vars.DB_NAME }}
+                  envkey_DB_HOST: ${{ vars.DB_HOST }}
+                  envkey_DB_PORT: ${{ vars.DB_PORT }}
+                  envkey_NEED_SEED_DATA: ${{ vars.NEED_SEED_DATA }}
+                  envkey_JWT_SECRET_ACCESS_TOKEN_KEY: ${{ vars.JWT_SECRET_ACCESS_TOKEN_KEY }}
+                  envkey_JWT_SECRET_REFRESH_TOKEN_KEY: ${{ vars.JWT_SECRET_REFRESH_TOKEN_KEY }}
+                  envkey_TOKEN_EXPIRED_IN: ${{ vars.TOKEN_EXPIRED_IN }}
+                  envkey_REFRESH_TOKEN_EXPIRED_IN: ${{ vars.REFRESH_TOKEN_EXPIRED_IN }}
+                  envkey_CORS_WHITE_LIST: ${{ vars.CORS_WHITE_LIST }}
+                  envkey_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+                  envkey_GOOGLE_CLIENT_SECRET: ${{ vars.GOOGLE_CLIENT_SECRET }}
+                  envkey_AWS_S3_BUCKET: ${{ vars.AWS_S3_BUCKET }}
+                  envkey_AWS_REGION: ${{ vars.AWS_REGION }}
+                  envkey_AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+                  envkey_AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+                  envkey_AWS_S3_DOMAIN: ${{ vars.AWS_S3_DOMAIN }}
+                  envkey_CRON_JOB_BOOKING_UPDATE_STATUS: ${{ vars.CRON_JOB_BOOKING_UPDATE_STATUS }}
+                  envkey_CRON_JOB_CREATE_REPORT_REVENUE: ${{ vars.CRON_JOB_CREATE_REPORT_REVENUE }}
+                  directory: .
+                  file_name: .env
+                  fail_on_empty: false
+                  sort_keys: false
             - name: Down old containers
               run: docker compose -f docker-compose.deployment.yml down
             - name: Pull image and run from dockerhub
