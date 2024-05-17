@@ -1,0 +1,19 @@
+name: CI/CD Workflow
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        needs: build
+        runs-on: self-hosted
+        steps:
+            - name: Down old containers
+              run: docker compose down -f docker-compose.deployment.yml
+            - name: Pull image and run from dockerhub
+              run: docker compose up -f docker-compose.deployment.yml
