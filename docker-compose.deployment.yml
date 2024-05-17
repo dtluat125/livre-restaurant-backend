@@ -5,7 +5,7 @@ services:
         restart: always
         env_file:
             - .env
-        image: 'dtluat259/restaurant-app:latest'
+        image: 'dtluat259/restaurant-app:main'
         ports:
             - '3000:${PORT}'
         depends_on:
