@@ -88,6 +88,8 @@ jobs:
               uses: actions/checkout@v4
             - name: Pull latest github code
               run: git pull origin main
+            - name: check variables
+              run: echo ${{ vars }}
 
             - name: Make envfile
               uses: SpicyPizza/create-envfile@v2.0
@@ -115,7 +117,6 @@ jobs:
                   envkey_AWS_S3_DOMAIN: ${{ vars.AWS_S3_DOMAIN }}
                   envkey_CRON_JOB_BOOKING_UPDATE_STATUS: ${{ vars.CRON_JOB_BOOKING_UPDATE_STATUS }}
                   envkey_CRON_JOB_CREATE_REPORT_REVENUE: ${{ vars.CRON_JOB_CREATE_REPORT_REVENUE }}
-                  directory: .
                   file_name: .env
                   fail_on_empty: false
                   sort_keys: false
