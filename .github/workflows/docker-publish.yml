@@ -88,7 +88,7 @@ jobs:
               uses: actions/checkout@v4
             - name: Pull latest github code
               run: git pull origin main
-            - name: check variables {{ vars }}
+            - name: check variables ${{ vars }}
               run: echo ${{ vars }}
 
             - name: Make envfile
