@@ -81,7 +81,7 @@ jobs:
 
     deploy:
         needs: build
-
+        environment: livre-restaurant-backend
         runs-on: self-hosted
         steps:
             - name: Checkout repository
