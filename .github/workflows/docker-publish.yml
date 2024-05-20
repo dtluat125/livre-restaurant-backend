@@ -129,6 +129,6 @@ jobs:
                   password: ${{ secrets.DOCKER_PASSWORD }}
 
             - name: Down old containers
-              run: sudo docker compose -f docker-compose.deployment.yml down restaurantApp
+              run: sudo docker compose -f docker-compose.deployment.yml down app
             - name: Pull image and run from dockerhub
               run: sudo docker compose -f docker-compose.deployment.yml up -d
