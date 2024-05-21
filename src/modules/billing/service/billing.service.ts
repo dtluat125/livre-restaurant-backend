@@ -12,6 +12,7 @@ import {
     DEFAULT_LIMIT_FOR_PAGINATION,
     DEFAULT_ORDER_BY,
     ORDER_DIRECTION,
+    TIMEZONE_NAME_DEFAULT,
 } from 'src/common/constants';
 import { EntityManager, Brackets, Like } from 'typeorm';
 import {
@@ -21,6 +22,7 @@ import {
     UpdateBillingDto,
 } from '../dto/billing.dto';
 import { Billing } from '../entity/billing.entity';
+import moment from 'moment-timezone';
 
 const BillingAttribute: (keyof Billing)[] = [
     'id',
@@ -63,13 +65,22 @@ export class BillingService {
         if (paymentTimeRange.length === 2) {
             queryBuilder.andWhere(
                 new Brackets((qb) => {
-                    qb.where(
-                        'billing.paymentTime BETWEEN :startDay AND :endDay',
-                        {
-                            startDay: paymentTimeRange[0],
-                            endDay: paymentTimeRange[1],
-                        },
-                    );
+                    qb.where('paymentTime BETWEEN :startDay AND :endDay', {
+                        startDay: moment
+                            .tz(
+                                `${paymentTimeRange[0]} 00:00`,
+                                'YYYY-MM-DD HH:mm',
+                                TIMEZONE_NAME_DEFAULT,
+                            )
+                            .toDate(),
+                        endDay: moment
+                            .tz(
+                                `${paymentTimeRange[1]} 23:59`,
+                                'YYYY-MM-DD HH:mm',
+                                TIMEZONE_NAME_DEFAULT,
+                            )
+                            .toDate(),
+                    });
                 }),
             );
         }

@@ -108,6 +108,23 @@ export class BookingController {
     ) {
         try {
             body.createdBy = req.loginUser.id;
+            if (body.tableId) {
+                if (
+                    !(await this.tableDiagramService.checkCanSetupTable(
+                        body.arrivalTime,
+                        body.tableId,
+                    ))
+                ) {
+                    const message = await this.i18n.translate(
+                        'billing.message.error.conflictTime',
+                    );
+                    return new ErrorResponse(
+                        HttpStatus.ITEM_IS_USING,
+                        message,
+                        [],
+                    );
+                }
+            }
             const newBooking = await this.bookingService.createBooking(body);
             await this.databaseService.recordUserLogging({
                 userId: req.loginUser?.id,

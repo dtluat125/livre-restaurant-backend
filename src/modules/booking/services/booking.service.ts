@@ -64,7 +64,7 @@ export class BookingService {
             queryBuilder.andWhere(
                 new Brackets((qb) => {
                     qb.where(
-                        'booking.arrivalTime BETWEEN :startDay AND :endDay',
+                        'Booking.arrivalTime BETWEEN :startDay AND :endDay',
                         {
                             startDay: arrivalTimeRange[0],
                             endDay: arrivalTimeRange[1],
