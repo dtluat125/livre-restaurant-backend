@@ -58,13 +58,10 @@ export class ReportRevenueService {
         if (dateRange.length === 2) {
             queryBuilder.andWhere(
                 new Brackets((qb) => {
-                    qb.where(
-                        'reportRevenue.date BETWEEN :startDay AND :endDay',
-                        {
-                            startDay: dateRange[0],
-                            endDay: dateRange[1],
-                        },
-                    );
+                    qb.where('date BETWEEN :startDay AND :endDay', {
+                        startDay: `${dateRange[0]} 00:00`,
+                        endDay: `${dateRange[1]} 23:59`,
+                    });
                 }),
             );
         }

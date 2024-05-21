@@ -26,7 +26,12 @@ import { UserList } from '../dto/response/api-response.dto';
 import { UserResponseDto } from '../dto/response/user-response.dto';
 import { UpdateUserDto } from '../dto/requests/update-user.dto';
 import { UserStatusDto } from '../dto/requests/common-user.dto';
-import { makeFileUrl } from 'src/common/helpers/common.function';
+import {
+    appendPermissionToRole,
+    makeFileUrl,
+} from 'src/common/helpers/common.function';
+import { Role } from 'src/modules/role/entity/role.entity';
+import { RolePermission } from 'src/modules/role/entity/rolePermissionRelation.entity';
 
 @Injectable()
 export class UserService {
@@ -166,12 +171,40 @@ export class UserService {
         }
     }
 
+    public async appendRoleToUser(user: User) {
+        try {
+            const role = await this.dbManager
+                .createQueryBuilder(Role, 'role')
+                .leftJoinAndMapMany(
+                    'role.rolePermissions',
+                    RolePermission,
+                    'rolePermission',
+                    'rolePermission.roleId = role.id',
+                )
+                .where('role.id = :userId', { userId: user.roleId })
+                .select([
+                    'role.id',
+                    'role.name',
+                    'role.description',
+                    'rolePermission.permissionId',
+                ])
+                .getOne();
+            appendPermissionToRole(role);
+            user.role = role;
+        } catch (error) {
+            console.log('Error in appendRoleToUser');
+            throw new InternalServerErrorException(error);
+        }
+    }
+
     async getUserById(id: number): Promise<UserResponseDto> {
         try {
             const user = await this.dbManager.findOne(User, {
                 relations: ['role', 'province'],
                 where: { id },
             });
+            await this.appendRoleToUser(user);
+
             if (user?.avatarId) {
                 const file = await this.dbManager.findOne(File, {
                     where: { id: user.avatarId },
@@ -185,6 +218,7 @@ export class UserService {
                     },
                 };
             }
+
             return user;
         } catch (error) {
             throw error;

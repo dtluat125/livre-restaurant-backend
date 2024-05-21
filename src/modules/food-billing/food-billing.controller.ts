@@ -53,6 +53,7 @@ export class FoodBillingController {
     @Get()
     @Permissions([
         `${PermissionResources.REPORT_REVENUE}_${PermissionActions.READ}`,
+        `${PermissionResources.BILLING}_${PermissionActions.READ}`,
     ])
     async getFoodBillings(
         @Query(
@@ -73,6 +74,7 @@ export class FoodBillingController {
     @Get(':id')
     @Permissions([
         `${PermissionResources.REPORT_REVENUE}_${PermissionActions.READ}`,
+        `${PermissionResources.BILLING}_${PermissionActions.READ}`,
     ])
     async getFoodBilling(@Param('id', ParseIntPipe) id: number) {
         try {

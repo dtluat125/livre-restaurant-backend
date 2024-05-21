@@ -87,6 +87,7 @@ export function getHourFromTime(time: string): number {
 export function appendPermissionToRole(role: Role) {
     // get permissions
     // append permissions attribute from cached permissionList variable
+
     role.permissions = permissionList.filter((item) => {
         const listIds = role.rolePermissions.map((item) => item.permissionId);
         return listIds.includes(item.id);

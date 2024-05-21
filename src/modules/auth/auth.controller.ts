@@ -181,7 +181,6 @@ export class AuthController {
             }
             const user = await this.authService.getUserByEmail(userInfoEmail);
             await this.authService.appendRoleToUser(user);
-            console.log(userInfoEmail, user);
             // check if user exists?
             if (!user) {
                 const message = await this.i18n.translate(

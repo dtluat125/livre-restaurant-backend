@@ -14,8 +14,10 @@ import { AcceptStatus } from './../../common/common.constant';
 
 dotenv.config();
 
-const CRON_JOB_CREATE_REPORT_REVENUE =
-    process.env.CRON_JOB_CREATE_REPORT_REVENUE || '0 14,22 * * *';
+const CRON_JOB_CREATE_MORNING_SHIFT_REPORT_REVENUE =
+    process.env.CRON_JOB_CREATE_REPORT_REVENUE || '0 14 * * *';
+const CRON_JOB_CREATE_AFTERNOON_SHIFT_REPORT_REVENUE =
+    process.env.CRON_JOB_CREATE_REPORT_REVENUE || '0 22 * * *';
 
 // const CRON_JOB_CREATE_REPORT_REVENUE = '* * * * *';
 //Change contract status from active to inactive if this contract outdate
@@ -104,15 +106,39 @@ export class CreateReportRevenueJob {
         });
     }
 
-    @Cron(CRON_JOB_CREATE_REPORT_REVENUE, {
+    @Cron(CRON_JOB_CREATE_MORNING_SHIFT_REPORT_REVENUE, {
         timeZone: TIMEZONE_NAME_DEFAULT,
     })
-    async handleCron() {
+    async handleCronCreateMorningShiftReportRevenue() {
         try {
-            this.logger.info('start CreateReportRevenueJob at', new Date());
+            this.logger.info(
+                'start CreateReportRevenueJob Morning Shift at',
+                new Date(),
+            );
             this.createReportRevenue();
         } catch (error) {
-            this.logger.error('Error in CreateReportRevenueJob: ', error);
+            this.logger.error(
+                'Error in CreateReportRevenueJob Morning Shift: ',
+                error,
+            );
+        }
+    }
+
+    @Cron(CRON_JOB_CREATE_AFTERNOON_SHIFT_REPORT_REVENUE, {
+        timeZone: TIMEZONE_NAME_DEFAULT,
+    })
+    async handleCronCreateAfternoonShiftReportRevenue() {
+        try {
+            this.logger.info(
+                'start CreateReportRevenueJob Afternoon Shift at',
+                new Date(),
+            );
+            this.createReportRevenue();
+        } catch (error) {
+            this.logger.error(
+                'Error in CreateReportRevenueJob Afternoon Shift: ',
+                error,
+            );
         }
     }
 }

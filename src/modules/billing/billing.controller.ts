@@ -54,9 +54,7 @@ export class BillingController {
     ) {}
 
     @Get()
-    @Permissions([
-        `${PermissionResources.REPORT_REVENUE}_${PermissionActions.READ}`,
-    ])
+    @Permissions([`${PermissionResources.BILLING}_${PermissionActions.READ}`])
     async getBillings(
         @Query(
             new RemoveEmptyQueryPipe(),
@@ -75,9 +73,7 @@ export class BillingController {
     }
 
     @Get(':id')
-    @Permissions([
-        `${PermissionResources.REPORT_REVENUE}_${PermissionActions.READ}`,
-    ])
+    @Permissions([`${PermissionResources.BILLING}_${PermissionActions.READ}`])
     async getBilling(@Param('id', ParseIntPipe) id: number) {
         try {
             const material = await this.billingService.getBillingDetail(id);
@@ -98,9 +94,7 @@ export class BillingController {
     }
 
     @Post()
-    @Permissions([
-        `${PermissionResources.REPORT_REVENUE}_${PermissionActions.CREATE}`,
-    ])
+    @Permissions([`${PermissionResources.BILLING}_${PermissionActions.CREATE}`])
     async createBilling(
         @Request() req,
         @Body(new TrimObjectPipe(), new JoiValidationPipe(CreateBillingSchema))
@@ -143,9 +137,7 @@ export class BillingController {
     }
 
     @Patch(':id')
-    @Permissions([
-        `${PermissionResources.REPORT_REVENUE}_${PermissionActions.UPDATE}`,
-    ])
+    @Permissions([`${PermissionResources.BILLING}_${PermissionActions.UPDATE}`])
     async updateBillingStatus(
         @Request() req,
         @Param('id', ParseIntPipe) id: number,

@@ -56,6 +56,7 @@ export class AuthorizationGuard implements CanActivate {
                     .length > 0
             );
         } catch (error) {
+            console.log(error);
             throw new ForbiddenException();
         }
     }
