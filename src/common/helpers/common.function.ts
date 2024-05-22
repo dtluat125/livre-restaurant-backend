@@ -93,6 +93,9 @@ export function appendPermissionToRole(role: Role) {
         return listIds.includes(item.id);
     });
     delete role.rolePermissions;
+    console.log('Permission List', permissionList);
+    console.log('role.permissions', role.permissions);
+
     // append action and resource attributes from cached actions and resources
     role.permissions = role.permissions.map((permission) => {
         const action = actionList.find(
