@@ -109,7 +109,7 @@ export function appendPermissionToRole(role: Role) {
     });
 }
 
-export function calculateDuration(loginAt: string, logoutAt: string): number {
+export function calculateDuration(loginAt: Date, logoutAt: Date): number {
     const date1 = moment(loginAt);
     const date2 = moment(logoutAt);
     return date2.diff(date1, 'seconds');

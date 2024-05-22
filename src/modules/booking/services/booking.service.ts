@@ -12,6 +12,7 @@ import { Brackets, EntityManager, In, Like } from 'typeorm';
 import { Booking } from '../entity/booking.entity';
 import { BookingListQueryStringDto } from '../dto/requests/list-booking.dto';
 import { BookingStatus } from '../booking.constant';
+import moment from 'moment-timezone';
 
 const bookingAttributes: (keyof Booking)[] = [
     'id',

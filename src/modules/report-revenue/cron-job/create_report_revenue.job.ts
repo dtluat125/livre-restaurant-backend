@@ -41,7 +41,7 @@ export class CreateReportRevenueJob {
             let startShift;
             let endShift;
             const dayShift = now.format('YYYY-MM-DD');
-            if (now.hours() < 7) {
+            if (now.hours() <= 14) {
                 shift = SHIFT.MORNING_SHIFT;
                 startShift = moment
                     .tz(`${dayShift} 09:00:00`, TIMEZONE_NAME_DEFAULT)

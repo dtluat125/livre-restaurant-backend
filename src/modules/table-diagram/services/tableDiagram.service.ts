@@ -268,15 +268,15 @@ export class TableDiagramService {
             return !bookings.some((item) => {
                 console.log(
                     calculateDuration(
-                        new Date(timeArrival).toUTCString(),
-                        item.arrivalTime.toUTCString(),
+                        new Date(timeArrival),
+                        new Date(item.arrivalTime),
                     ),
                 );
                 return (
                     Math.abs(
                         calculateDuration(
-                            new Date(timeArrival).toUTCString(),
-                            item.arrivalTime.toUTCString(),
+                            new Date(timeArrival),
+                            new Date(item.arrivalTime),
                         ),
                     ) < BLOCK_TIME_BOOKING && item.id !== currentBookingId
                 );

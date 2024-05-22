@@ -179,12 +179,26 @@ export class BookingController {
                         [],
                     );
                 } else if (body.status == BookingStatus.DONE) {
+                    if (
+                        await this.tableDiagramService.checkTableIsUsing(
+                            body.tableId,
+                        )
+                    ) {
+                        const message = await this.i18n.translate(
+                            'table.message.error.tableUsing',
+                        );
+                        return new ErrorResponse(
+                            HttpStatus.ITEM_IS_USING,
+                            message,
+                            [],
+                        );
+                    }
                     await this.billingService.createBilling({
                         customerName: body?.nameCustomer || '',
                         customerPhone: body?.phone || '',
                         tableId: body?.tableId || 0,
                         arrivalTime: new Date(),
-                        billingStatus: BillingStatus.EATING,
+                        billingStatus: BillingStatus.WAIT_FOR_SELECT_FOOD,
                     });
                 }
             }

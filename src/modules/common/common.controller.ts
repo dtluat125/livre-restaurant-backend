@@ -171,6 +171,8 @@ export class CommonController {
                 BillingStatus.WAIT_FOR_SELECT_FOOD,
             );
 
+            console.log('oldBilling', oldBilling);
+
             if (!oldBilling) {
                 const message = await this.i18n.translate(
                     'common.error.billing.notFound',
@@ -185,6 +187,9 @@ export class CommonController {
             const billing = await this.mobileService.getBillingRelativeTable(
                 id,
             );
+
+            console.log('billing', billing);
+
             if (!billing) {
                 const message = await this.i18n.translate(
                     'material.message.materialNotFound',

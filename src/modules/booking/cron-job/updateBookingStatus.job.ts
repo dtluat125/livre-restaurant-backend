@@ -9,7 +9,7 @@ import {
 } from 'src/common/constants';
 import { createWinstonLogger } from 'src/common/services/winston.service';
 import { getManager } from 'typeorm';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import * as dotenv from 'dotenv';
 import { Booking } from '../entity/booking.entity';
 import { MODULE_NAME } from '../booking.constant';
@@ -34,17 +34,18 @@ export class UpdateBookingStatusJob {
 
     async cancelBooking() {
         try {
-            const today = moment()
-                .subtract(BLOCK_TIME_BOOKING, 'minutes')
-                .toDate();
+            const today = moment().subtract(BLOCK_TIME_BOOKING, 'seconds');
             const manager = getManager();
             await manager
                 .createQueryBuilder()
                 .update(Booking)
                 .set({ status: BookingStatus.CANCELED })
-                .where('arrivalTime < :today AND status = :status', {
-                    today,
-                    status: BookingStatus.WAITING,
+                .where('arrivalTime < :today AND status IN (:status)', {
+                    today: today.toDate(),
+                    status: [
+                        BookingStatus.WAITING,
+                        BookingStatus.WAITING_FOR_APPROVE,
+                    ],
                 })
                 .execute();
 
