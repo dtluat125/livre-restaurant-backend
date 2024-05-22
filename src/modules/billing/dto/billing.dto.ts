@@ -58,9 +58,7 @@ export const BillingSchema = {
         .optional()
         .allow(null, '')
         .valid(...Object.values(PaymentMethod)),
-    paymentTime: Joi.date()
-        .allow(null)
-        .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_COLON),
+    paymentTime: Joi.date().allow(null),
     arrivalTime: Joi.date()
         .allow(null)
         .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_COLON),
