@@ -45,6 +45,25 @@ export class DashboardController {
         }
     }
 
+    @Get('/food')
+    async getFoodRevenue(
+        @Query(
+            new RemoveEmptyQueryPipe(),
+            new JoiValidationPipe(revenueChartListQuerySchema),
+        )
+        query: IRevenueChartListQuery,
+    ) {
+        try {
+            const foodRevenue = await this.dashboardService.getFoodRevenue(
+                query,
+            );
+            console.log(foodRevenue);
+            return new SuccessResponse(foodRevenue);
+        } catch (error) {
+            return new InternalServerErrorException(error);
+        }
+    }
+
     @Get('/data')
     async getSupportRequestCategoryList(
         @Query(

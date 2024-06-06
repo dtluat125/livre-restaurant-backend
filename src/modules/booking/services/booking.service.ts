@@ -150,12 +150,14 @@ export class BookingService {
         booking: CreateBookingDto,
     ): Promise<BookingDetailResponseDto> {
         try {
+            console.log('booking', booking);
             const insertedBooking = await this.dbManager
                 .getRepository(Booking)
                 .insert(booking);
             const bookingId = insertedBooking?.identifiers[0]?.id;
             if (bookingId) {
                 const tableDetail = await this.getBookingDetail(bookingId);
+                console.log('tableDetail', tableDetail);
                 return tableDetail;
             }
             throw new InternalServerErrorException();
