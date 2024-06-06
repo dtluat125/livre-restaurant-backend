@@ -36,6 +36,7 @@ import { NODE_ENV } from 'src/common/constants';
                         logPath: 'logs/query.log',
                     }),
                     synchronize: false,
+                    timezone: 'Z',
                 };
                 if (socketPath) {
                     Object.assign(options, { socketPath });

@@ -13,7 +13,6 @@ export const DatabaseConfig = [
         socketPath: null,
         synchronize: false,
         migrationsRun: false,
-        timezone: 'Z',
         entities: ['dist/**/*.entity{.ts,.js}'],
         migrations: ['database/migrations/**/*{.ts,.js}'],
         cli: { migrationsDir: 'database/migrations' },
