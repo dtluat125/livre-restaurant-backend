@@ -14,10 +14,8 @@ import { AcceptStatus } from './../../common/common.constant';
 
 dotenv.config();
 
-const CRON_JOB_CREATE_MORNING_SHIFT_REPORT_REVENUE =
-    process.env.CRON_JOB_CREATE_REPORT_REVENUE || '0 14 * * *';
-const CRON_JOB_CREATE_AFTERNOON_SHIFT_REPORT_REVENUE =
-    process.env.CRON_JOB_CREATE_REPORT_REVENUE || '0 22 * * *';
+const CRON_JOB_CREATE_MORNING_SHIFT_REPORT_REVENUE = '0 14 * * *';
+const CRON_JOB_CREATE_AFTERNOON_SHIFT_REPORT_REVENUE = '0 22 * * *';
 
 // const CRON_JOB_CREATE_REPORT_REVENUE = '* * * * *';
 //Change contract status from active to inactive if this contract outdate
