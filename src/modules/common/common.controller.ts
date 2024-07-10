@@ -166,10 +166,10 @@ export class CommonController {
     @Get('/billing/table/:id')
     async getBillingRelativeTable(@Param('id', ParseIntPipe) id: number) {
         try {
-            const oldBilling = await this.mobileService.getBillingDetail(
-                id,
+            const oldBilling = await this.mobileService.getBillingDetail(id, [
+                BillingStatus.EATING,
                 BillingStatus.WAIT_FOR_SELECT_FOOD,
-            );
+            ]);
 
             console.log('oldBilling', oldBilling);
 

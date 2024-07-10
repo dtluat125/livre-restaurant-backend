@@ -2,7 +2,7 @@ import { BillingStatus } from './../../billing/billing.constant';
 import { FoodBilling } from '../../food-billing/entity/food-billing.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, In, Repository } from 'typeorm';
 
 import { Billing } from 'src/modules/billing/entity/billing.entity';
 import { BillingDetailResponseDto } from 'src/modules/billing/dto/billing.dto';
@@ -74,14 +74,14 @@ export class MobileService {
 
     async getBillingDetail(
         tableId: number,
-        billingStatus: BillingStatus,
+        billingStatuses: BillingStatus[],
     ): Promise<BillingDetailResponseDto> {
         try {
             const billing = await this.dbManager.findOne(Billing, {
                 relations: ['table'],
                 where: {
                     tableId: tableId,
-                    billingStatus: billingStatus,
+                    billingStatus: In(billingStatuses),
                 },
             });
             return billing;
