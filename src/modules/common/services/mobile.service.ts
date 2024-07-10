@@ -26,10 +26,9 @@ export class MobileService {
                     billingStatus: BillingStatus.EATING,
                 },
             );
-            const billing = await this.getBillingDetail(
-                tableId,
+            const billing = await this.getBillingDetail(tableId, [
                 BillingStatus.EATING,
-            );
+            ]);
 
             return billing;
         } catch (error) {
